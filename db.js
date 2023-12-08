@@ -8,6 +8,17 @@ const modeloUser = mongoose.model('usuarios', new mongoose.Schema({
     password: String
 }))
 
+const cateTarefas = mongoose.model('categoria', new mongoose.Schema({
+    idUser: String,
+    nomeCategoria: String
+}))
+
+const tarefas = mongoose.model('tarefas', new mongoose.Schema({
+    idCate: String,
+    terefa: String,
+    feito: String,
+}))
+
 
 mongoose.connect(process.env.CONX)
     
@@ -26,6 +37,9 @@ class HttpFuncs{
         }
         async viewUsus(){
             return await modeloUser.find()
+        }
+        async createCategoria(idUser, nome){
+            return await cateTarefas.create({idUser: idUser, nomeCategoria: nome})
         }
 
     }

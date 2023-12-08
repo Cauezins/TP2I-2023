@@ -11,22 +11,28 @@
         res.send(user)
     })
     
-    app.post('/post',async (req,res) =>{
+    app.post('/registerUser',async (req,res) =>{
         let retorna = await db.registerUsu(req.body.email, req.body.senha);
-        res.send(retorna);
+        if(!retorna){
+            return  res.json({mensagem: "Ocorreu algum erro inesperado!"})
+        }
+        res.json({mensagem: "Registrado com sucesso"})
     })
 
-    app.post('/login',async (req,res) =>{
+    app.post('/loginUser',async (req,res) =>{
         let retorna = await db.loginUsu(req.body.email, req.body.senha);
-        res.send(retorna);
+        if(!retorna){
+            return  res.json({mensagem: "Email ou Senha estão inválidos"})
+        }
+        res.json({mensagem: "Cadastrado com sucesso"})
     })
 
-    app.put('/put', async (req,res)=>{
+    app.put('/atualizarUser', async (req,res)=>{
         let retorna = await db.updateUsu(req.body.email, req.body.password, req.body.newemail, req.body.newpassword)
         res.send(retorna)
     })
     
-    app.delete('/delete', async (req,res)=>{
+    app.delete('/deleteUser', async (req,res)=>{
         const userDeleted = await db.deleteUsu(req.body.email, req.body.senha)
         res.send(userDeleted)
     })  
